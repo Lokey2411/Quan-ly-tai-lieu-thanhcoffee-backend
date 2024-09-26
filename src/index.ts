@@ -19,7 +19,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use(express.json());
 app.use(
 	cors({
-		origin: "http://localhost:8000", // Allow port 3000 to post
+		origin: "http://localhost:8000", // Allow port 8000 to post
 	})
 );
 app.use(cookieParser());
