@@ -1,0 +1,15 @@
+type TStatus = {
+	[key: string]: number;
+};
+
+export const STATUS: TStatus = {
+	OK: 200,
+	BAD_REQUEST: 400,
+	NOT_FOUND: 404,
+	SERVER_ERROR: 500,
+	UNAUTHORIZED: 401,
+	FORBIDDEN: 403,
+	NOT_IMPLEMENTED: 501,
+	BAD_GATEWAY: 502,
+	SERVICE_UNAVAILABLE: 503,
+};

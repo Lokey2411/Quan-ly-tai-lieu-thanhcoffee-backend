@@ -1,10 +1,11 @@
 import Express from "express";
-import { addContent, deleteContent, getAllContent, updateContent } from "../controller/content.controller";
+import { addContent, deleteContent, getAllContent, updateContent, updateContents } from "../controller/content.controller";
 const route = Express.Router();
 
 route.get("/", getAllContent);
 route.post("/", addContent);
-route.put("/:id", updateContent);
+route.put("/:id", updateContents);
+route.patch("/:id", updateContent);
 route.delete("/:id", deleteContent);
 
 export default route;

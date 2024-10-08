@@ -6,8 +6,11 @@ import { MulterError } from "multer";
 import dotenv from "dotenv";
 import path from "path";
 import routes from "./routes/index.route";
+import { WebSocketServer } from "ws";
+import http from "http";
 dotenv.config();
 const app = express();
+const server = http.createServer(app);
 
 // Middleware
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -27,7 +30,8 @@ app.use(cookieParser());
 // Multer configuration
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, path.join(__dirname, "../../fe/public/uploads")); // Đảm bảo đường dẫn đúng
+		console.log(req.body);
+		cb(null, path.join(__dirname, "../../fe/public/uploads/" + req.body.folder || "")); // Đảm bảo đường dẫn đúng
 	},
 	filename: (req, file, cb) => {
 		cb(null, Date.now() + "-" + file.originalname); // Thêm dấu "-" cho rõ ràng
@@ -57,6 +61,26 @@ app.use((err: MulterError, req: Request, res: Response, next: NextFunction) => {
 routes.forEach((route) => {
 	app.use("/" + route.path, route.router);
 });
+
+// WebSocket Server setup
+// const wss = new WebSocketServer({ server }); // Attach the WebSocket server to the HTTP server
+
+// wss.on("connection", (ws) => {
+// 	console.log("New WebSocket connection");
+
+// 	// Respond to messages from the client
+// 	ws.on("message", (message) => {
+// 		console.log("Received:", message.toString());
+
+// 		// Send a message back to the client
+// 		ws.send(`Echo: ${message}`);
+// 	});
+
+// 	// Handle WebSocket disconnection
+// 	ws.on("close", () => {
+// 		console.log("WebSocket connection closed");
+// 	});
+// });
 
 // Start server
 app.listen(process.env.PORT, () => {
