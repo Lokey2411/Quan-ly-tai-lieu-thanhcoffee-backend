@@ -3,6 +3,13 @@ import { STATUS } from "../status";
 
 export const deleteImage = async (req: any, res: any) => {
 	const db = await createConnection();
+	/**
+	 * Xoá hình  ảnh trong table images có  id = req.params.id
+	 * Trả  về  JSON message "Delete image successfully" n u xo  th nh c ng,
+	 * @param {Request} req - Request object
+	 * @param {Response} res - Response object
+	 * @returns {Promise<void>}
+	 */
 	try {
 		const id = req.params.id;
 		const [oldImage]: any = await db.query("SELECT * FROM images WHERE id = ?", [id]);

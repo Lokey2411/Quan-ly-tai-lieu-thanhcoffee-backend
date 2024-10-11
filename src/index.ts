@@ -13,6 +13,7 @@ const app = express();
 const server = http.createServer(app);
 
 // Middleware
+// TODO: Allow cors
 app.use((req: Request, res: Response, next: NextFunction) => {
 	// Allow credentials
 	res.header("Access-Control-Allow-Credentials", "true");
@@ -57,7 +58,7 @@ app.use((err: MulterError, req: Request, res: Response, next: NextFunction) => {
 	next(err);
 });
 
-// routes
+// TODO: use routes
 routes.forEach((route) => {
 	app.use("/" + route.path, route.router);
 });

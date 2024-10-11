@@ -1,3 +1,9 @@
+/**
+ * @file content.route.ts
+ * @author Hà Hải VIệt
+ * @description Routes for content
+ */
+
 import Express from "express";
 import { addContent, deleteContent, getAllContent, updateContent, updateContents } from "../controller/content.controller";
 const route = Express.Router();

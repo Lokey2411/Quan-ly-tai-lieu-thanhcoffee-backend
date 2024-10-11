@@ -1,8 +1,22 @@
+/**
+ * @file project.controller.ts
+ * @author Hà Hải VIệt
+ * @description Controller for project with table name `projects`
+ */
+
 import createConnection from "../mysql";
 
 const tableName = "projects";
 
-export const getAllProject = async (req: any, res: any) => {
+/**
+ * Lấy tất cả các project
+ * Trả về JSON message "Internal Server Error" nếu có lỗi
+ * Trả về JSON message "projects" và chứa m  ng project
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
+export const getAllProject = async (req: any, res: any): Promise<void> => {
 	const db = await createConnection();
 	try {
 		// Chờ kết quả từ truy vấn
@@ -17,7 +31,16 @@ export const getAllProject = async (req: any, res: any) => {
 	}
 };
 
-export const addProject = async (req: any, res: any) => {
+/**
+ * Thêm mới một project
+ * - Kiểm tra xem parent có tồn tại hay không
+ * - Kiểm tra xem project đã tồn tại chưa
+ * - Trả về JSON message "Add project successfully" nếu thêm thành công, "Add project failed" nếu thêm thất bại
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
+export const addProject = async (req: any, res: any): Promise<void> => {
 	const db = await createConnection();
 	console.log("insert project: ", req.body);
 	try {
@@ -47,7 +70,14 @@ export const addProject = async (req: any, res: any) => {
 	}
 };
 
-export const updateProject = async (req: any, res: any) => {
+/**
+ * Update một project
+ * - Trả về JSON message "Update project successfully" nếu thêm thành công, "Update project failed" nếu thêm thất bại
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
+export const updateProject = async (req: any, res: any): Promise<void> => {
 	const db = await createConnection();
 	try {
 		const { name, image, description, map, parent_id } = req.body;
@@ -62,7 +92,15 @@ export const updateProject = async (req: any, res: any) => {
 	}
 };
 
-export const deleteProject = async (req: any, res: any) => {
+/**
+ * Xóa một project
+ * - Trả về JSON message "Delete project successfully" nếu xóa thành công
+ * - Trả về JSON message "Internal Server Error" nếu có lỗi
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
+export const deleteProject = async (req: any, res: any): Promise<void> => {
 	const db = await createConnection();
 	try {
 		const id = req.params.id;

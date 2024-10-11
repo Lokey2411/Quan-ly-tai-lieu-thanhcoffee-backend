@@ -1,11 +1,25 @@
+/**
+ * Controller for navbar items with table name `navbar_items`
+ * @author Hà Hải VIệt
+ * @packageDocumentation
+ * @module controller/navbarItem.controller
+ * @description Controller for navbar items
+ */
+
 import createConnection from "../mysql";
 import { STATUS } from "../status";
 import { NavBarItem } from "../types/NavBarItem";
 
 const tableName = "navbar_items";
 
-// Function to insert a menu item and its children
-async function insertMenuItem(db: any, item: NavBarItem, parentId: number | null = null) {
+/**
+ * Recursively inserts a menu item and its children into the navbar_items table
+ * @param {any} db - The database connection
+ * @param {NavBarItem} item - The current menu item to be inserted
+ * @param {number | null} [parentId=null] - The parent ID of the current menu item
+ * @returns {Promise<void>}
+ */
+async function insertMenuItem(db: any, item: NavBarItem, parentId: number | null = null): Promise<void> {
 	try {
 		// Insert the current child item (without id)
 		const [result] = await db.query(`INSERT INTO ${tableName} (displayText, path, parent_id) VALUES (?, ?, ?)`, [item.displayText, item.path, parentId]);
@@ -24,8 +38,12 @@ async function insertMenuItem(db: any, item: NavBarItem, parentId: number | null
 	}
 }
 
-// Main function to insert just the children
-async function insertChildrenOnly() {
+/**
+ * Inserts the children of the menu item with id 2. The children are recursively inserted.
+ * This is a one-time use function and should be removed after use.
+ * @returns {Promise<void>}
+ */
+async function insertChildrenOnly(): Promise<void> {
 	const db = await createConnection();
 	try {
 		const menuData: NavBarItem = {
@@ -265,7 +283,14 @@ async function insertChildrenOnly() {
 	}
 }
 
-const fetchChildren = async (db: any, parentId: number) => {
+/**
+ * Lấy các phần tử con của phần tử có id là parentId
+ * Hàm này gọi đệ quy để lấy các phần tử con của các phần tử con
+ * @param {object} db - Kết nối đến cơ sở dữ liệu
+ * @param {number} parentId - Id của phần tử cha
+ * @return {Promise<any[]>} - Danh sách các phần tử con
+ */
+const fetchChildren = async (db: any, parentId: number): Promise<any[]> => {
 	const [children]: any = await db.query(`SELECT * FROM ${tableName} WHERE parent_id = ?`, [parentId]);
 	for (const child of children) {
 		// Gọi đệ quy để lấy tiếp children của phần tử hiện tại
@@ -274,7 +299,13 @@ const fetchChildren = async (db: any, parentId: number) => {
 	}
 	return children;
 };
-export const getAllItems = async (req: any, res: any) => {
+/**
+ * Lấy tất cả các mục cha (không có parent_id) và các phần tử con
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
+export const getAllItems = async (req: any, res: any): Promise<void> => {
 	const db = await createConnection();
 	const query = {
 		parent: `SELECT * FROM ${tableName} WHERE parent_id IS NULL`,
@@ -301,7 +332,15 @@ export const getAllItems = async (req: any, res: any) => {
 	}
 };
 
-export const addItem = async (req: any, res: any) => {
+/**
+ * Thêm mới một item
+ * - Nếu có `parent_id` thì phải kiểm tra xem `parent_id` có tồn tại trong `navbar_items` hay không
+ * - Trả về JSON message "Add project successfully" nếu thêm thành công, "Add project failed" nếu thêm thất bại
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
+export const addItem = async (req: any, res: any): Promise<void> => {
 	const db = await createConnection();
 	try {
 		const { displayText, path, parent_id } = req.body;
@@ -352,7 +391,14 @@ export const addItem = async (req: any, res: any) => {
 	}
 };
 
-export const updateItem = async (req: any, res: any) => {
+/**
+ * Cập nhật một item trong navbar_items
+ * - Trả về JSON message "Update project successfully" nếu thành công
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
+export const updateItem = async (req: any, res: any): Promise<void> => {
 	const db = await createConnection();
 	try {
 		const { displayText, path, parent_id } = req.body;
@@ -367,7 +413,15 @@ export const updateItem = async (req: any, res: any) => {
 	}
 };
 
-export const deleteItem = async (req: any, res: any) => {
+/**
+ * Xóa một item trong navbar_items
+ * - Trả về JSON message "Delete project successfully" nếu thành công
+ * - Trả về JSON message "Internal Server Error" nếu có lỗi
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
+export const deleteItem = async (req: any, res: any): Promise<void> => {
 	const db = await createConnection();
 	try {
 		const id = Number(req.params.id);

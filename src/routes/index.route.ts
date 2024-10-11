@@ -4,6 +4,11 @@ import contentRoute from "./content.route";
 import guideRoute from "./guide.route";
 import imageRoute from "./image.route";
 
+/**
+ * Import routes
+ * Then add to array with defined path and router
+ */
+
 export default [
 	{
 		path: "api/projects",

@@ -1,3 +1,9 @@
+/**
+ * @file navBarItem.route.ts
+ * @author Hà Hải VIệt
+ * @description Routes for navbar item
+ */
+
 import express from "express";
 import { addItem, deleteItem, getAllItems, updateItem } from "../controller/navbarItem.controller";
 const route = express.Router();

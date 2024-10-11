@@ -1,8 +1,20 @@
+/**
+ * @file content.controller.ts
+ * @author Hà Hải VIệt
+ * @description Controller for content with table name `contents`
+ */
+
 import { Request, Response } from "express";
 import createConnection from "../mysql";
 
 const tableName = "contents";
 
+/**
+ * Get all contents from db
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
 export const getAllContent = async (req: Request, res: any) => {
 	const db = await createConnection();
 	const getChildren = async (parentId: number) => {
@@ -55,6 +67,12 @@ export const getAllContent = async (req: Request, res: any) => {
 	}
 };
 
+/**
+ * Thêm content mới
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
 export const addContent = async (req: any, res: any) => {
 	const db = await createConnection();
 	try {
@@ -89,6 +107,14 @@ export const addContent = async (req: any, res: any) => {
 	}
 };
 
+/**
+ * Cập nhật content có id là `req.params.id`
+ * - Nếu có `images` trong `req.body`, sẽ xóa hết ảnh cũ và thêm ảnh mới
+ * - Trả về JSON message "Update project successfully" nếu thành công
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
 export const updateContents = async (req: Request, res: Response) => {
 	const db = await createConnection();
 	try {
@@ -114,6 +140,13 @@ export const updateContents = async (req: Request, res: Response) => {
 	}
 };
 
+/**
+ * Xóa content có id là `req.params.id`
+ * Trả về JSON message "Delete successfully" nếu thành công
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
 export const deleteContent = async (req: any, res: any) => {
 	const db = await createConnection();
 	try {
@@ -129,6 +162,15 @@ export const deleteContent = async (req: any, res: any) => {
 		db.end();
 	}
 };
+
+/**
+ * Cập nhật content có id là `req.params.id`
+ * - Chỉ cập nhật title và content, không cần update parent_id và parent_table
+ * - Trả về JSON message "Update content successfully" nếu thành công
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
 
 export const updateContent = async (req: any, res: any) => {
 	const db = await createConnection();

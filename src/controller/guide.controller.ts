@@ -1,7 +1,20 @@
+/**
+ * @file guide.controller.ts
+ * @author Hà Hải VIệt
+ * @description Controller for guide with table name `guides`
+ */
+
 import createConnection from "../mysql";
 import { STATUS } from "../status";
 
 const tableName = "guides";
+
+/**
+ * Get a guide by id
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
 
 export const getGuide = async (req: any, res: any) => {
 	const db = await createConnection();
@@ -16,6 +29,12 @@ export const getGuide = async (req: any, res: any) => {
 		db.end();
 	}
 };
+/**
+ * Lấy tất cả các mục cha (không có parent_id)
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
 export const getGuides = async (req: any, res: any) => {
 	const db = await createConnection();
 	const query = `SELECT * FROM ${tableName}`;
@@ -34,6 +53,14 @@ export const getGuides = async (req: any, res: any) => {
 	}
 };
 
+/**
+ * Thêm mới một guide
+ * - Nếu có `parent_id` thì phải kiểm tra xem `parent_id` có tồn tại trong `navbar_items` hay không
+ * - Trả về JSON message "Add successfully" nếu thêm thành công, "Add failed" nếu thêm thất bại
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
 export const insertGuide = async (req: any, res: any) => {
 	const db = await createConnection();
 	try {
@@ -62,6 +89,15 @@ export const insertGuide = async (req: any, res: any) => {
 	}
 };
 
+/**
+ * Cập nhật guide có id là `req.params.id`
+ * - Chỉ cập nhật title và content, không cần update parent_id
+ * - Trả về JSON message "Update project successfully" nếu thành công
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
+
 export const updateGuide = async (req: any, res: any) => {
 	const db = await createConnection();
 	try {
@@ -78,6 +114,13 @@ export const updateGuide = async (req: any, res: any) => {
 	}
 };
 
+/**
+ * Xóa guide có id là `req.params.id`
+ * Trả về JSON message "Delete  successfully" nếu thành công
+ * @param {Request} req - Request object
+ * @param {Response} res - Response object
+ * @returns {Promise<void>}
+ */
 export const deleteGuide = async (req: any, res: any) => {
 	const db = await createConnection();
 	try {

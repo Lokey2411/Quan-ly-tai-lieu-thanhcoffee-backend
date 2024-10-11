@@ -1,3 +1,8 @@
+/**
+ * @file project.route.ts
+ * @author Hà Hải VIệt
+ * @description Routes for project
+ */
 import Express from "express";
 import { addProject, deleteProject, getAllProject, updateProject } from "../controller/project.controller";
 
