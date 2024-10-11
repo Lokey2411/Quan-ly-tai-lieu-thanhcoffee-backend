@@ -1,11 +1,13 @@
 {
 	"compilerOptions": {
-		"target": "ES6",
+		"outDir": "./build", // Chỉ định folder đích cho các file biên dịch
 		"module": "commonjs",
-		"strict": true,
+		"target": "es6",
 		"esModuleInterop": true,
-		"skipLibCheck": true
+		"strict": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true
 	},
-	"include": ["src"],
-	"exclude": ["node_modules", "dist"]
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "**/*.spec.ts"]
 }

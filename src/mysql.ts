@@ -1,5 +1,6 @@
 import mysql from "mysql2/promise";
 import dotenv from "dotenv";
+import { Connection } from "mysql2";
 dotenv.config();
 // Tạo kết nối
 const createConnection = async () => {
