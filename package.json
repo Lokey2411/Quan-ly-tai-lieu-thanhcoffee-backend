@@ -1,0 +1,10 @@
+{
+	"scripts": {
+		"fe": "cd fe && yarn start",
+		"be": "cd be && yarn dev",
+		"start": "concurrently \"yarn fe\" \"yarn be\""
+	},
+	"dependencies": {
+		"concurrently": "^9.0.1"
+	}
+}
