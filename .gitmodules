@@ -1,0 +1,6 @@
+[submodule "fe"]
+	path = fe
+	url = https://gitlab.com/saint5715514/quan-ly-tai-lieu.git
+[submodule "be"]
+	path = be
+	url = https://gitlab.com/saint5715514/quan-ly-tai-lieu.git
